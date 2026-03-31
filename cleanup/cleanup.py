@@ -10,7 +10,6 @@ os.makedirs(output_folder, exist_ok=True)
 
 # Data containers
 words_data = []
-ratings_data = []
 demographics_data = []
 id_key_data = []
 
@@ -23,9 +22,7 @@ for file_path in files:
     subject_id = file_name.replace("data-", "").replace(".csv", "")
     
     df = pd.read_csv(file_path)
-    
-    current_video = None
-    
+        
     for _, row in df.iterrows():
         # Clean the response string (handle NaN and empty)
         resp_str = str(row["response"]).strip()
@@ -52,20 +49,7 @@ for file_path in files:
                     "condition": entry.get("condition")
                 })
                 # Update current video (so ratings.csv knows the corresponding video)
-                current_video = entry.get("video")
 
-        # ratings.csv
-        elif row["trial_name"] == "ratings":
-            for trait in resp_json:
-                if trait != "instructions":
-                    ratings_data.append({
-                        "subject_id": subject_id,
-                        "trait": trait,
-                        "value": resp_json[trait],
-                        "video": current_video,
-                        "rt": row["rt"]
-                    })
-        
         # demographics.csv
         elif row["trial_name"] == "demographics":
             demographics_data.append({
@@ -88,7 +72,6 @@ for file_path in files:
 
 # Convert to DataFrames and save
 pd.DataFrame(words_data).to_csv(f"{output_folder}words.csv", index=False)
-pd.DataFrame(ratings_data).to_csv(f"{output_folder}ratings.csv", index=False)
 pd.DataFrame(demographics_data).to_csv(f"{output_folder}demographics.csv", index=False)
 pd.DataFrame(id_key_data).to_csv(f"{output_folder}id_key.csv", index=False)
 
