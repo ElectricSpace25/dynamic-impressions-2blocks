@@ -27,6 +27,13 @@ const urlParams = new URLSearchParams(window.location.search);
 const prolificID = urlParams.get("participant_id") || "unknown"; // If no Prolific ID is provided in the URL, the ID will be reported as 'unknown'
 
 
+// --- Assign Condition ---
+
+const conditions = ["body_first", "impression_first"]
+const condition = jsPsych.randomization.sampleWithoutReplacement(conditions, 1)[0];
+if (config.DEBUG_LOGS) console.log(`Condition: ${condition}`);
+
+
 // --- Safari Warning ---
 
 const browserCheck = {
@@ -95,9 +102,15 @@ const screenerTrial = {
 
 // --- Instructions ---
 
-const instructionsTrial = {
+const bodyLanguageInstructionsTrial = {
     type: jsPsychSurvey,
-    survey_json: content.instructionsContent,
+    survey_json: content.bodyLanguageInstructionsContent,
+    data: { trial_name: "instructions" }
+};
+
+const impressionsInstructionsTrial = {
+    type: jsPsychSurvey,
+    survey_json: content.impressionsInstructionsContent,
     data: { trial_name: "instructions" }
 };
 
@@ -150,7 +163,7 @@ function checkFullscreen() {
 const demoTrial = {
     type: jsPsychVideoDescription,
     demo: true,
-    video_path: "assets/video/demo.mp4",
+    video_path: "assets/demo.mp4",
     demo_text: "<p>Before we start, let's do a practice trial</p><p>Please pause the video and practice entering words</p><p>The study will begin after this practice trial</p>",
     debug_logs: config.DEBUG_LOGS,
     data: { trial_name: "demo" }
@@ -188,15 +201,6 @@ const videoTrial = {
 };
 
 
-// --- Rating trial ---
-
-const ratingTrial = {
-    type: jsPsychSurvey,
-    survey_json: content.ratingContent,
-    data: { trial_name: "ratings" }
-};
-
-
 // --- Ending trials ---
 
 const demographicsTrial = {
@@ -225,23 +229,32 @@ const finishedTrial = {
 const videoTimeline = {
     timeline: [
         checkFullscreen(),
-        videoTrial,
-        ratingTrial
-    ],
-    timeline_variables: videoTimelineVariables
+        videoTrial
+    ]
 };
 
+// Initial trials
 timeline.push(
     browserCheck,
     checkSafari(),
     preloadVideos,
-    screenerTrial,
-    instructionsTrial,
-    audioCheckTrial,
-    fullscreen,
-    demoTrial,
-    startMessageTrial,
-    videoTimeline,
+    screenerTrial
+);
+
+// Video trials (ordered by condition)
+const impressionTrials = videoTimelineVariables.filter(video => video.condition === "impression");
+const bodyTrials = videoTimelineVariables.filter(video => video.condition === "body");
+
+if (condition === 'impression_first') {
+    timeline.push(impressionsInstructionsTrial, audioCheckTrial, fullscreen, demoTrial, startMessageTrial, { ...videoTimeline, timeline_variables: impressionTrials });
+    timeline.push(bodyLanguageInstructionsTrial, { ...videoTimeline, timeline_variables: bodyTrials });
+} else {
+    timeline.push(bodyLanguageInstructionsTrial, audioCheckTrial, fullscreen, demoTrial, startMessageTrial, { ...videoTimeline, timeline_variables: bodyTrials });
+    timeline.push(impressionsInstructionsTrial, { ...videoTimeline, timeline_variables: impressionTrials });
+}
+
+// Final trials
+timeline.push(
     demographicsTrial,
     finishedTrial
 );

@@ -1,18 +1,18 @@
 export const config = {
 
     // Video stimuli filepath
-    VIDEO_PATH: "assets/videos/stimuli",
+    VIDEO_PATH: "assets/stimuli",
 
     // When enabled, shuffles order of all videos
     // Note: this overrides ALL other shuffle parameters
-    SHUFFLE_ALL: true,
+    SHUFFLE_ALL: false,
 
     // When enabled, shuffles the order of the video lists
     SHUFFLE_LIST_ORDER: false,
 
     // When enabled, ensures that if a participant sees a video from List A, they won't see the corresponding version at the same index in List B (or any other list)
     // See README for more information
-    EXCLUSIVE_INDEX_MODE: false,
+    EXCLUSIVE_INDEX_MODE: true,
 
     // When enabled, logs debug messages to console
     DEBUG_LOGS: false,
@@ -23,13 +23,41 @@ export const config = {
 
 export const videoLists = [
     {
-        condition: "control", // The condition name saved in data
+        condition: "body", // The condition name saved in data
         selectionNum: 3, // How many videos to select from this list
-        shuffle: false, // Whether to shuffle the order of the videos or not (overriden by SHUFFLE_ALL)
+        shuffle: true, // Whether to shuffle the order of the videos or not (overriden by SHUFFLE_ALL)
         videos: [
             "video1.mp4",
             "video2.mp4",
-            "video3.mp4"
+            "video3.mp4",
+            "video4.mp4",
+            "video5.mp4",
+            "video6.mp4",
+            "video7.mp4",
+            "video8.mp4",
+            "video9.mp4",
+            "video10.mp4",
+            "video11.mp4",
+            "video12.mp4"
+        ]
+    },
+    {
+        condition: "impression",
+        selectionNum: 3,
+        shuffle: true,
+        videos: [
+            "video1.mp4",
+            "video2.mp4",
+            "video3.mp4",
+            "video4.mp4",
+            "video5.mp4",
+            "video6.mp4",
+            "video7.mp4",
+            "video8.mp4",
+            "video9.mp4",
+            "video10.mp4",
+            "video11.mp4",
+            "video12.mp4"
         ]
     }
 ];
