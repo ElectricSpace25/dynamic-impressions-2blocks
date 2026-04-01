@@ -28,7 +28,7 @@ export const screenerContent = {
 
 // --- Instructions ---
 
-export const impressionsInstructionsContent = {
+export const impressionInstructionsContent = {
     title: "Section Instructions",
     pages: [
         {

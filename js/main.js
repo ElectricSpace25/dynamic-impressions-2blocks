@@ -4,19 +4,6 @@ import { config } from "./config.js";
 import * as utils from "./utils.js";
 import * as content from "./content.js";
 
-// Import disruptions.js if it exists
-let disruptionLookup;
-async function loadDisruptions() {
-    try {
-        const module = await import("./disruptions.js");
-        disruptionLookup = module.disruptionLookup;
-    } catch (error) {
-        if (config.DEBUG_LOGS) console.warn("disruptions.js not found");
-        disruptionLookup = null;
-    }
-}
-await loadDisruptions();
-
 const startTime = new Date().toLocaleString(); // Records the date and time at the start of the study
 export let complete = false; // This is set to true at the end of the study to indicate completion and 
 const timeline = []; // Creates the experiment timeline
@@ -102,15 +89,15 @@ const screenerTrial = {
 
 // --- Instructions ---
 
-const bodyLanguageInstructionsTrial = {
+const impressionInstructionsTrial = {
     type: jsPsychSurvey,
-    survey_json: content.bodyLanguageInstructionsContent,
+    survey_json: content.impressionInstructionsContent,
     data: { trial_name: "instructions" }
 };
 
-const impressionsInstructionsTrial = {
+const bodyLanguageInstructionsTrial = {
     type: jsPsychSurvey,
-    survey_json: content.impressionsInstructionsContent,
+    survey_json: content.bodyLanguageInstructionsContent,
     data: { trial_name: "instructions" }
 };
 
@@ -160,13 +147,21 @@ function checkFullscreen() {
 
 // --- Demo trial ---
 
-const demoTrial = {
+const impressionDemoTrial = {
     type: jsPsychVideoDescription,
     demo: true,
     video_path: "assets/demo.mp4",
-    demo_text: "<p>Before we start, let's do a practice trial</p><p>Please pause the video and practice entering words</p><p>The study will begin after this practice trial</p>",
     debug_logs: config.DEBUG_LOGS,
-    data: { trial_name: "demo" }
+    data: { trial_name: "impression_demo" }
+};
+
+const bodyDemoTrial = {
+    type: jsPsychVideoDescription,
+    demo: true,
+    video_path: "assets/demo.mp4",
+    debug_logs: config.DEBUG_LOGS,
+    input_placeholder_text: "e.g. '???', '???'",
+    data: { trial_name: "body_demo" }
 };
 
 const startMessageTrial = {
@@ -179,25 +174,26 @@ const startMessageTrial = {
 
 // --- Video trial ---
 
-const videoTrial = {
+const impressionVideoTrial = {
     type: jsPsychVideoDescription,
     video_path: jsPsych.timelineVariable("video_path"),
     video_name: jsPsych.timelineVariable("video_name"),
     video_id: jsPsych.timelineVariable("video_id"),
     condition: jsPsych.timelineVariable("condition"),
     debug_logs: config.DEBUG_LOGS,
-    on_start: function (trial) {
-        // Parses disruption time if possible
-        if (disruptionLookup != null) {
-            const entry = disruptionLookup[trial.video_name.split("/").pop()];
-            if (entry) {
-                trial.break_start = utils.parseTimeCode(entry.start);
-                trial.break_end = utils.parseTimeCode(entry.end);
-                if (config.DEBUG_LOGS) console.log(`Disruption added: ${trial.break_start} to ${trial.break_end}`);
-            }
-        }
-    },
-    data: { trial_name: "video" }
+    data: { trial_name: "impression_video" }
+};
+
+const bodyVideoTrial = {
+    type: jsPsychVideoDescription,
+    video_path: jsPsych.timelineVariable("video_path"),
+    video_name: jsPsych.timelineVariable("video_name"),
+    video_id: jsPsych.timelineVariable("video_id"),
+    condition: jsPsych.timelineVariable("condition"),
+    debug_logs: config.DEBUG_LOGS,
+    final_impressions_text: "Please add any final words that you feel describe this person's body language. You must include at least two.",
+    input_placeholder_text: "e.g. '???', '???'",
+    data: { trial_name: "body_video" }
 };
 
 
@@ -225,10 +221,17 @@ const finishedTrial = {
 
 // --- Main timeline ---
 
-const videoTimeline = {
+const impressionVideoTimeline = {
     timeline: [
         checkFullscreen(),
-        videoTrial
+        impressionVideoTrial
+    ]
+};
+
+const bodyVideoTimeline = {
+    timeline: [
+        checkFullscreen(),
+        bodyVideoTrial
     ]
 };
 
@@ -245,11 +248,11 @@ const impressionTrials = videoTimelineVariables.filter(video => video.condition 
 const bodyTrials = videoTimelineVariables.filter(video => video.condition === "body");
 
 if (condition === 'impression_first') {
-    timeline.push(impressionsInstructionsTrial, audioCheckTrial, fullscreen, demoTrial, startMessageTrial, { ...videoTimeline, timeline_variables: impressionTrials });
-    timeline.push(bodyLanguageInstructionsTrial, { ...videoTimeline, timeline_variables: bodyTrials });
+    timeline.push(impressionInstructionsTrial, audioCheckTrial, fullscreen, impressionDemoTrial, startMessageTrial, { ...impressionVideoTimeline, timeline_variables: impressionTrials });
+    timeline.push(bodyLanguageInstructionsTrial, { ...bodyVideoTimeline, timeline_variables: bodyTrials });
 } else {
-    timeline.push(bodyLanguageInstructionsTrial, audioCheckTrial, fullscreen, demoTrial, startMessageTrial, { ...videoTimeline, timeline_variables: bodyTrials });
-    timeline.push(impressionsInstructionsTrial, { ...videoTimeline, timeline_variables: impressionTrials });
+    timeline.push(bodyLanguageInstructionsTrial, audioCheckTrial, fullscreen, bodyDemoTrial, startMessageTrial, { ...bodyVideoTimeline, timeline_variables: bodyTrials });
+    timeline.push(impressionInstructionsTrial, { ...impressionVideoTimeline, timeline_variables: impressionTrials });
 }
 
 // Final trials
