@@ -11,7 +11,7 @@ export const config = {
     SHUFFLE_LIST_ORDER: false,
 
     // When enabled, ensures that if a participant sees a video from List A, they won't see the corresponding version at the same index in List B (or any other list)
-    // See README for more information
+    // See the wiki for more information
     EXCLUSIVE_INDEX_MODE: true,
 
     // Message shown to participants before redirection upon successful completion of the study
