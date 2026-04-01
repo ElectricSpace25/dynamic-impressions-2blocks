@@ -37,7 +37,7 @@ for file_path in files:
             continue
 
         # words.csv
-        if row["trial_name"] == "video":
+        if row["trial_name"] == "impression_video" or row["trial_name"] == "body_video":
             for entry in resp_json:
                 words_data.append({
                     "subject_id": subject_id,
@@ -67,7 +67,8 @@ for file_path in files:
                 "subject_id": subject_id,
                 "prolific_id": row["prolific_id"],
                 "start_time": row["start_time"],
-                "end_time": row["end_time"]
+                "end_time": row["end_time"],
+                "start_condition": row["start_condition"]
             })
 
 # Convert to DataFrames and save

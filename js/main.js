@@ -210,7 +210,7 @@ const demographicsTrial = {
 const finishedTrial = {
     type: jsPsychSurvey,
     survey_json: content.finishedContent,
-    data: { trial_name: "info", prolific_id: prolificID, start_time: startTime },
+    data: { trial_name: "info", prolific_id: prolificID, start_time: startTime, start_condition: condition},
     on_finish: function (data) {
         // Can't add end_time with data: {} because it will calculate time at start
         data.end_time = new Date().toLocaleString();
