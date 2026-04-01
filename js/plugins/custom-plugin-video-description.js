@@ -32,7 +32,7 @@ var jsPsychVideoDescription = (function (jspsych) {
             instruction_text: {
                 type: jspsych.ParameterType.HTML_STRING,
                 pretty_name: "Instruction Text",
-                default: "Enter one word at a time, using as many words as would be helpful.",
+                default: "Describe this person's characteristics. Enter one word at a time, using as many words as would be helpful.",
                 description: "Text displayed under the word list when the video is paused."
             },
             default_notice_text: {

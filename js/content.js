@@ -59,7 +59,7 @@ export const impressionInstructionsContent = {
                     html: `
                         <video width="100%" autoplay loop muted src="assets/instruct/submitting_impression.mp4"></video>
                         <p>Pause the video whenever you <b>notice a new characteristic</b> about the person or think of a <b>new way to describe them.</b> Pause by clicking anywhere on the video or pressing the spacebar.</p>
-                        <p><b>Enter one word at a time,</b> but you can enter multiple words each time you pause (see video). You can remove words before submitting by clicking the "X" next to the word.</p>
+                        <p><b>Enter one word at a time,</b> but you can enter multiple words each time you pause (see video). For example, if you feel like the person is being an annoying student, pause and enter “annoying” and “student” separately. Order does not matter. You can remove words before submitting by clicking the "X" next to the word.</p>
                         <p>Enter whatever comes to mind spontaneously. There are no limits on what you enter! We only ask that you <b>pause and describe the person multiple times.</b> Please note there is a minimum amount of time that needs to pass between each pause video (2 seconds).</p>
                         <div class="callout-box">
                             <p>Based on past experience, <b>we expect you will pause 2-5 times per video.</b></p>
@@ -75,7 +75,7 @@ export const impressionInstructionsContent = {
                     type: "html",
                     html: `
                         <video width="100%" autoplay loop muted src="assets/instruct/final_impression.mp4"></video>
-                        <p>Form your final impression of the speaker. <b>Think of this as a list of words you'd use to describe this person to someone else — your summary impression.</b></p>
+                        <p>Form your final impression of the speaker. <b>Think of this as a list of words you'd use to describe this person to someone else, your summary impression.</b></p>
                         <p>Once again, enter one word at a time, for as many words as you'd like.</p>
                     `
                 }
@@ -115,7 +115,7 @@ export const bodyLanguageInstructionsContent = {
                     html: `
                         <video width="100%" autoplay loop muted src="assets/instruct/submitting_body.mp4"></video>
                         <p>Pause the video whenever you <b>notice a gesture, change in posture, or specific movement</b> or think of a <b>new way to describe their physical behavior.</b> Pause by clicking anywhere on the video or pressing the spacebar.</p>
-                        <p><b>Enter one word at a time,</b> but you can enter multiple words each time you pause (see video). You can remove words before submitting by clicking the "X" next to the word.</p>
+                        <p><b>Enter one word at a time,</b> but you can enter multiple words each time you pause (see video). For example, if you notice the person is "fidgeting" and has "tense shoulders," pause and enter those descriptors separately. Order does not matter. You can remove words before submitting by clicking the "X" next to the word.</p>
                         <p>Enter whatever comes to mind spontaneously. There are no limits on what you enter! We only ask that you <b>pause and describe the person multiple times.</b> Please note there is a minimum amount of time that needs to pass between each pause video (2 seconds).</p>
                         <div class="callout-box">
                             <p>Based on past experience, <b>we expect you will pause 2-5 times per video.</b></p>
@@ -131,7 +131,7 @@ export const bodyLanguageInstructionsContent = {
                     type: "html",
                     html: `
                         <video width="100%" autoplay loop muted src="assets/instruct/final_body.mp4"></video>
-                        <p>Summarize the physical mannerisms or types of body language this person tends to display.</p>
+                        <p>Form your final impression of the speaker's body language. <b>Think of this as a list of words you'd use to describe this person's body language to someone else, your summary impression.</b></p>
                         <p>Once again, enter one word at a time, for as many words as you'd like.</p>
                     `
                 }

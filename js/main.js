@@ -160,7 +160,8 @@ const bodyDemoTrial = {
     demo: true,
     video_path: "assets/demo.mp4",
     debug_logs: config.DEBUG_LOGS,
-    input_placeholder_text: "e.g. '???', '???'",
+    instruction_text: "Describe this person's body language. Enter one word at a time, using as many words as would be helpful.",
+    input_placeholder_text: "e.g. 'nodding', 'waving'",
     data: { trial_name: "body_demo" }
 };
 
@@ -191,8 +192,9 @@ const bodyVideoTrial = {
     video_id: jsPsych.timelineVariable("video_id"),
     condition: jsPsych.timelineVariable("condition"),
     debug_logs: config.DEBUG_LOGS,
+    instruction_text: "Describe this person's body language. Enter one word at a time, using as many words as would be helpful.",
     final_impressions_text: "Please add any final words that you feel describe this person's body language. You must include at least two.",
-    input_placeholder_text: "e.g. '???', '???'",
+    input_placeholder_text: "e.g. 'nodding', 'waving'",
     data: { trial_name: "body_video" }
 };
 
