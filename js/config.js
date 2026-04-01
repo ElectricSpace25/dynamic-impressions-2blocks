@@ -14,6 +14,18 @@ export const config = {
     // See README for more information
     EXCLUSIVE_INDEX_MODE: true,
 
+    // Message shown to participants before redirection upon successful completion of the study
+    COMPLETION_MESSAGE: "You will be redirected to Prolific shortly!",
+    
+    // Link participants are redirected to 2 seconds after seeing the completion message
+    COMPLETION_LINK: "https://app.prolific.co/submissions/complete?cc=????????",
+
+    // Message shown to participants before redirection upon early termination of the study
+    FAILURE_MESSAGE: "<p>Sorry, you are not eligible for the study.</p><p>You will be redirected to Prolific shortly.</p>",
+
+    // Link participants are redirected to 2 seconds after seeing the failure message
+    FAILURE_LINK: "https://app.prolific.co/submissions/complete?cc=????????",
+
     // When enabled, logs debug messages to console
     DEBUG_LOGS: false,
 
