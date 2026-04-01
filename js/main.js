@@ -220,7 +220,6 @@ const finishedTrial = {
         data.end_time = new Date().toLocaleString();
         complete = true;
     },
-    data: { trial_name: "finished" }
 };
 
 
